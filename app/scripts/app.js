@@ -10,8 +10,9 @@ define(['routes','services/dependencyResolverFor'], function(config, dependencyR
         '$compileProvider',
         '$filterProvider',
         '$provide',
+		'$injector',
 
-        function($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide)
+        function($routeProvider, $locationProvider, $controllerProvider, $compileProvider, $filterProvider, $provide, $injector)
         {
 	        app.controller = $controllerProvider.register;
 	        app.directive  = $compileProvider.directive;
@@ -19,7 +20,15 @@ define(['routes','services/dependencyResolverFor'], function(config, dependencyR
 	        app.factory    = $provide.factory;
 	        app.service    = $provide.service;
 
-            $locationProvider.html5Mode(true);
+			app._providerObject = {
+                $compileProvider: $compileProvider,
+                $controllerProvider: $controllerProvider,
+                $filterProvider: $filterProvider,
+                $provide: $provide,
+                $injector : $injector
+            };
+			
+            //$locationProvider.html5Mode(true);
 
             if(config.routes !== undefined)
             {
